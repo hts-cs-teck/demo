@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>チーム一覧</title>
+</head>
+
+<link rel="stylesheet" href="/js/jquery.treeview/jquery.treeview.css"/>
+<script src="/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="/js/jquery.treeview/jquery.treeview.js" th:src="@{/js/jquery.treeview/jquery.treeview.js}"></script>
+<script src="js/teamList.js" th:src="@{/js/teamList.js}"></script>
+
+<script th:inline="javascript">
+
+function teamEditAction(id, parentid, name) {
+	$("#id").val(id);
+	$("#parentid").val(parentid);
+	$("#eparentid").val(parentid);
+	$("#ename").val(name);
+	$("#rspid").val($("#spid").val());
+	$("#rsname").val($("#sname").val());
+	$("#teamEdit").submit();
+}
+
+function createTree( teamList, conditions, treeView ) {
+
+	$.each(teamList, function(){
+
+		var form = $('<form style="display: inline" method="post" action="/deleteTeam?'
+						+ 'id='	+ this.team.id
+						+ '&amp;parentid='	+ (this.team.parentid == null ? '' : this.team.parentid)
+						+ '&amp;rspid=' + (conditions.spid == null ? '' : conditions.spid)
+						+ '&amp;rsname=' + (conditions.sname == null ? '' : conditions.sname)
+						+ '">'
+						+ '&nbsp;&nbsp;'
+						+ '<input type="submit" value="削除" onclick="return confirm(&#39;「' + this.team.name + '」を削除します。よろしいですか？&#39;)"/></form>');
+	    var span = $('<span></span>').text(this.team.name);
+	    span.addClass("team").data("id", this.team.id).data("parentid", this.team.parentid).data("name", this.team.name);
+	    if( this.selected ) {
+	        span.wrapInner('<span class="selected"></span>');
+	    }
+
+	    if( this.cteamList.length != 0 ) {
+		    var ul = $("<ul></ul>");
+		    if (this.existChildren || this.existMember) {
+			    $("<li></li>").append(span).appendTo(treeView).append(ul);
+		    } else {
+			    $("<li></li>").append(span).append(form).appendTo(treeView).append(ul);
+		    }
+		    createTree( this.cteamList, conditions, ul );
+	    } else {
+		    if (this.existChildren || this.existMember) {
+		        $("<li></li>").append(span).appendTo(treeView);
+		    } else {
+		        $("<li></li>").append(span).append(form).appendTo(treeView);
+		    }
+	    }
+	});
+}
+
+$(function(){
+    var list = [[${teamList}]];
+    var conditions = [[${conditions}]];
+	createTree( list, conditions, $("#teamTree") );
+
+    $("#teamTree").treeview({
+        animated: "fast"
+      });
+
+    $("span.team").each(function(idx){
+		$(this).wrapInner('<a href="" onclick="teamEditAction('
+			+ $(this).data('id')
+			+ ', '
+			+ $(this).data('parentid')
+			+ ', &#39;'
+			+ $(this).data('name')
+			+ '&#39;);return false;"> </a>');
+	});
+})
+
+</script>
+
+<body>
+	<div th:replace="layout::header"></div>
+
+	<div id="header"></div>
+
+	<div>
+		<h2>チーム一覧</h2>
+		<p style="color: red" th:text="${Message}"></p>
+
+		<div style="display:inline-flex">
+			<form onclick="teamEditAction(null, null);return false;">
+				<button>チーム追加</button>
+			</form>
+			<form method="post" action="/member">
+				<input type="submit" value="メンバー表示"/>
+			</form>
+		</div>
+		<div style="float: right">
+			<form method="post" action="/eventList">
+				<button>トップに戻る</button>
+			</form>
+		</div>
+
+		<br/>
+
+		<div>
+			<h3> チーム検索 </h3>
+			<form method="post" action="/team">
+				<p>
+					<input type="submit" value="検索"/>
+					<input type="button" value="クリア" onClick="clearCondition()"/>
+				</p>
+				<p>チームを選択するか、チーム名の一部を指定して検索します。
+					<br/>
+					<select name="spid" id="spid">
+						<option value=""></option>
+						<option th:each="team:${steamList}" th:value="${team.id}" th:selected="${team.id} == ${conditions.spid}" th:inline="text">[[${team.name}]]</option>
+					</select>
+					<br/>
+					<input type="text" name="sname" id="sname" th:value="${conditions.sname}"/>
+				</p>
+  			</form>
+			<br/>
+			<div>
+				検索結果
+			</div>
+			<div>
+				<form name="teamEdit" id="teamEdit" method="post" action="/teamEdit">
+					<input type="hidden" name="id" id="id" value=""/>
+					<input type="hidden" name="parentid" id="parentid" value=""/>
+					<input type="hidden" name="eparentid" id="eparentid" value=""/>
+					<input type="hidden" name="ename" id="ename" value=""/>
+					<input type="hidden" name="rspid" id="rspid" value=""/>
+					<input type="hidden" name="rsname" id="rsname" value=""/>
+				</form>
+	            <ul id="teamTree" class="treeview" >
+	            </ul>
+			</div>
+
+		</div>
+		<form method="post" action="eventList">
+			<div align="right">
+				<button>トップに戻る</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

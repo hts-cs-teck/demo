@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>チーム編集</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<style>
+		.fieldError {
+			background-color: #ff8080;
+		}
+	</style>
+
+</head>
+
+<script src="/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+
+<script th:inline="javascript">
+
+function onReturn() {
+	$("#operation").val("return");
+	$("#regist").submit();
+}
+
+</script>
+
+
+<body>
+	<div th:replace="layout::header"></div>
+
+	<h2>チーム編集</h2>
+	<p style="color: red" th:text="${Message}"></p>
+
+	<form name="regist" id="regist" method="post" th:object="${teamModel}" action="/registTeam">
+		<p>
+			<input type="hidden" name="id" th:field="*{id}" />
+			<input type="hidden" name="parentid" th:field="*{parentid}" />
+			<input type="hidden" name="rspid" th:field="*{rspid}" />
+			<input type="hidden" name="rsname" th:field="*{rsname}" />
+			<input type="hidden" name="operation" id="operation" />
+		</p>
+		<p>
+			所属：
+			<select name="eparentid" id="eparentid">
+				<option value=""></option>
+				<option th:each="parent:${teamList}" th:value="${parent.id}"
+					th:selected="${parent.id} == (${teamModel.eparentid} == null ? '' : ${teamModel.eparentid})" th:inline="text">[[${parent.name}]]</option>
+			</select>
+		</p>
+		<p>
+			チーム：<input type="text" name="ename" th:field="*{ename}" th:errorclass="fieldError" />
+		</p>
+		<p style="color: red;" th:if="${#fields.hasErrors('ename')}" th:errors="*{ename}"></p>
+		<p>
+			<input type="submit" name="setteam" value="編集完了" />
+		</p>
+	</form>
+	<p>
+		<input type="button" value="戻る" onclick="onReturn();return false;"/>
+	</p>
+</body>
+</html>
