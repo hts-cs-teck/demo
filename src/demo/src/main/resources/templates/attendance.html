@@ -51,6 +51,14 @@
         <input type="hidden" name="eventdateid" th:value="${eventDate.id}" />
       </td>
     </tr>
+	<tr>
+      <td>
+         <span>致知読書感想文</span>
+	  </td>
+      <td>
+        <input type="radio" th:each="item : ${attendanceModel.selectBookAttendance}" th:field="${attendanceModel.bookAttendance}" th:value="${item.key}" th:text="${item.value}" />
+      </td>
+    </tr>
     </table>
 
     <br/>

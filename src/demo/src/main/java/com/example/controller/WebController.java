@@ -168,6 +168,7 @@ public class WebController {
 					for (EventDate eventDate : eventDateList) {
 
 						String dateSpan = formatDateSpan(eventDate.getStartDate(), eventDate.getEndDate());
+						strDateListResult.add(dateSpan);
 						// 連結した文字列を保持
 						if(strDateResult.length() == 0)
 						{
@@ -177,6 +178,7 @@ public class WebController {
 						{
 							strDateResult = strDateResult + "," + dateSpan;
 						}
+
 
 						// メンバ 登録結果の参照
 						List<EventAttendance> eventAttendanceList = eventAttendanceService.findAll();

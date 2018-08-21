@@ -17,6 +17,7 @@
         ～<br />
         <span th:text="${#dates.format(eventDate.endDate, 'yyyy/MM/dd HH:mm')}"></span>
       </th>
+      <th>致知読書感想文</th>
       <th>コメント</th>
     </tr>
     <tr th:each="eventDetail:${eventDetailList}">
@@ -24,6 +25,7 @@
       <td th:each="attendance:${eventDetail.attendanceList}">
         <span th:text="${attendance}"></span>
       </td>
+      <td th:text="${eventDetail.bookAttendance}"></td>
       <td th:text="${eventDetail.comment}"></td>
     </tr>
   </table>

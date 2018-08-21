@@ -80,6 +80,7 @@ public class EventDetailController {
 			EventComment eventComment = eventCommentService.findByPK(member.getId(), eventDetailModel.getEventid());
 			if (eventComment != null) {
 				dto.setComment(eventComment.getComment());
+				dto.setBookAttendance(eventComment.getBookattendance());
 			}
 
 			eventDetailList.add(dto);

@@ -80,6 +80,7 @@ public class AttendanceController {
 		if(eventComment != null)
 		{
 			attendanceModel.setComment(eventComment.getComment());
+			attendanceModel.setBookAttendance(eventComment.getBookattendance());
 		}
 		model.addAttribute("attendance", dto);
 		model.addAttribute("eventDateList", eventDateList);
@@ -115,6 +116,7 @@ public class AttendanceController {
 		EventComment eventComment = new EventComment();
 		eventComment.setEventcommentPK(eventCommentPK);
 		eventComment.setComment(attendanceModel.getComment());
+		eventComment.setBookattendance(attendanceModel.getBookAttendance());
 
 		// コメントの登録
 		eventCommentService.save(eventComment);
