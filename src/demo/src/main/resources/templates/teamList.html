@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>チーム一覧</title>
+</head>
+<script src="/js/jquery-3.3.1.min.js" th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script src="js/teamList.js" th:src="@{/js/teamList.js}"></script>
+
+
+<script th:inline="javascript">
+
+function teamEditAction(id, parentid, name) {
+	$("#id").val(id);
+	$("#parentid").val(parentid);
+	$("#eparentid").val(parentid);
+	$("#ename").val(name);
+	$("#rspid").val($("#spid").val());
+	$("#rsname").val($("#sname").val());
+	$("#teamEdit").submit();
+}
+
+function createTable( teamList, conditions) {
+
+	$("#tBody tr").remove();
+
+	$.each(teamList, function(i, team){
+
+		var tr = $('<tr></tr>').appendTo($("#tBody"));
+		// チームID
+		$('<td></td>').appendTo(tr).text(team.id);
+		// 所属チームID
+		$('<td></td>').appendTo(tr).text(team.parentid);
+		// チーム名
+		var tdName = $('<td></td>').appendTo(tr).text(team.name);
+		tdName.wrapInner(
+				'<a href="" onclick="teamEditAction('
+				+ team.id
+				+ ', '
+				+ (team.parentid == null ? '' : team.parentid)
+				+ ', &#39;' + team.name + '&#39;'
+				+ ');return false;"> </a>');
+		// 削除ボタン
+		var tdRemove = $('<td align="center"></td>').appendTo(tr);
+		var form = $('<form style="display: inline" method="post" action="/deleteTeam?'
+				+ 'id='	+ team.id
+				+ '&amp;parentid=' + (team.parentid == null ? '' : team.parentid)
+				+ '&amp;rspid=' + (conditions.spid == null ? '' : conditions.spid)
+				+ '&amp;rsname=' + (conditions.sname == null ? '' : conditions.sname)
+				+ '">'
+				+ '<input type="submit" value="削除" onclick="return confirm(&#39;「' + team.name + '」を削除します。よろしいですか？&#39;)"/></form>');
+		form.appendTo(tdRemove);
+	});
+}
+
+
+$(function(){
+
+    var list = [[${steamList2}]];
+    var conditions = [[${conditions}]];
+    createTable( list, conditions );
+})
+
+</script>
+
+<body>
+	<div th:replace="layout::header"></div>
+
+	<div id="header"></div>
+
+	<div>
+		<h2>チーム一覧</h2>
+		<p style="color: red" th:text="${Message}"></p>
+
+		<div style="display:inline-flex">
+			<form method="post" action="/teamEdit">
+				<input type="submit" value="チーム追加"/>
+			</form>
+			<form method="post" action="/member">
+				<input type="submit" value="メンバー表示"/>
+			</form>
+		</div>
+		<div style="float: right">
+			<form method="post" action="/eventList">
+				<button>トップに戻る</button>
+			</form>
+		</div>
+
+		<br/>
+
+		<div>
+			<h3> チーム検索 </h3>
+			<form method="post" action="/team">
+				<p>
+					<input type="submit" value="検索"/>
+					<input type="button" value="クリア" onClick="clearCondition()"/>
+				</p>
+				<p>チームを選択するか、チーム名の一部を指定して検索します。
+					<br/>
+					<select name="spid" id="spid">
+						<option value=""></option>
+						<option th:each="team:${steamList2}" th:value="${team.id}" th:selected="${team.id} == ${conditions.spid}" th:inline="text">[[${team.name}]]</option>
+					</select>
+					<br/>
+					<input type="text" name="sname" id="sname" th:value="${conditions.sname}"/>
+				</p>
+  			</form>
+			<br/>
+			<div>
+				検索結果
+			</div>
+			<div>
+				<form name="teamEdit" id="teamEdit" method="post" action="/teamEdit">
+					<input type="hidden" name="id" id="id" value=""/>
+					<input type="hidden" name="parentid" id="parentid" value=""/>
+					<input type="hidden" name="eparentid" id="eparentid" value=""/>
+					<input type="hidden" name="ename" id="ename" value=""/>
+					<input type="hidden" name="rspid" id="rspid" value=""/>
+					<input type="hidden" name="rsname" id="rsname" value=""/>
+				</form>
+				<table id="teamTable" style="width: 80%" border="1">
+				<thead>
+					<tr>
+						<th style="width: 20%">チームID</th>
+						<th style="width: 20%">所属チームID</th>
+						<th style="width: 50%">チーム名</th>
+						<th style="width: 10%"></th>
+					</tr>
+				</thead>
+				<tbody id="tBody">
+				</tbody>
+				</table>
+			</div>
+
+		</div>
+		<form method="post" action="eventList">
+			<div align="right">
+				<button>トップに戻る</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
