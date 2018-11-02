@@ -161,7 +161,7 @@ public class MemberEditController {
 				member.setId(Long.parseLong(id));
 			}
 			member.setemployeeid(Long.parseLong(memberModel.getEmployeeid()));
-			member.setPasswd(memberModel.getPasswd());
+			member.setPasswd(StringUtil.sha256(memberModel.getPasswd()));
 			member.setName(memberModel.getName());
 			member.setTeamid(Long.parseLong(memberModel.getSteamid()));
 

@@ -73,7 +73,16 @@ public class WebController {
 				return "login";
 			}
 			Member member = members.get(0);
-			if (!member.getPasswd().equals(loginChkModel.getPasswd()))
+
+			boolean checkPasswd = false;
+			if (member.getPasswd().length() == 64) {
+				// 暗号化あり
+				checkPasswd = member.getPasswd().equals(StringUtil.sha256(loginChkModel.getPasswd()));
+			} else {
+				// 暗号化なし
+				checkPasswd = member.getPasswd().equals(loginChkModel.getPasswd());
+			}
+			if (!checkPasswd)
 			{
 				model.addAttribute("Message","ユーザIDもしくはパスワードが間違っています");
 				return "login";
