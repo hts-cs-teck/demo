@@ -35,5 +35,29 @@ public class TeamService {
 	public void delete(final Long id) {
 		repository.delete(id);
 	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findByNameLike(final String name) {
+		return repository.findByNameLike(name);
+	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findByParentidIsNull() {
+		return repository.findByParentidIsNull();
+	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findById(final Long id) {
+		return repository.findById(id);
+	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findByParentid(final Long parentid) {
+		return repository.findByParentid(parentid);
+	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findByIdAndParentid(final Long id, final Long parentid) {
+		return repository.findByIdAndParentid(id, parentid);
+	}
+	@Transactional(readOnly = true, timeout = 10)
+	public List<Team> findByIdAndParentidIsNull(final Long id) {
+		return repository.findByIdAndParentidIsNull(id);
+	}
 
 }

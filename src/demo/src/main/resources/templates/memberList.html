@@ -32,11 +32,16 @@ window.onload=function(){
 	<div>
 		<h2>メンバー一覧</h2>
 
-		<div>
+		<div style="display:inline-flex">
 			<form method="post" action="/memberEdit">
 				<button>メンバー追加</button>
 			</form>
-			<form method="post" action="/eventList" style="float: right">
+			<form method="post" action="/team">
+				<button>チーム表示</button>
+			</form>
+		</div>
+		<div style="float: right">
+			<form method="post" action="/eventList">
 				<button>トップに戻る</button>
 			</form>
 		</div>
@@ -46,13 +51,6 @@ window.onload=function(){
 		<div>
 			<h3> メンバー検索 </h3>
 			<form method="post" action="/member">
-<!--
-				<p id="Search">
-					絞込： <input type="radio" name="searchTeam" value="1"
-						checked="checked" />CS事業部 <input type="radio" name="searchTeam"
-						value="2" />SB事業部
-				</p>
--->
 				<p>
 					<input type="submit" value="検索"/>
 					<input type="button" value="クリア" onClick="clearCondition()"/>
@@ -68,11 +66,6 @@ window.onload=function(){
 
 				<p>メンバー
 					<input type="text" name="sname" id="sname" />
-	<!--
-					<span style="float: right">
-						<button>検索</button>
-					</span>
-	 -->
 	 			</p>
   			</form>
 			<br /> <br />
