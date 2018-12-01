@@ -271,11 +271,11 @@
 			<table>
 	 			<tbody id="team">
 				<tr>
-					<td>プリセット：</td>
-					<td th:each="team, stat : ${teamList}">
-						<input type="checkbox" id="teamlistPreset" name="teamlistPreset" th:value="${team.name}" th:text="${team.name}" th:checked="${team.selected==true}" />
-					</td>
-					<td>
+					<td>プリセット：
+						<select name="teamlist">
+							<option value=""></option>
+							<option th:each="team:${teamList}" th:value="${team.id}" th:selected="${team.id} " th:inline="text">[[${team.name}]]</option>
+						</select>
 						<input type="button" value="追加" onclick="preset()" />
 					</td>
 				</tr>
@@ -286,11 +286,11 @@
 			<table>
 	 			<tbody id="team">
 				<tr>
-					<td>絞り込み：</td>
-					<td th:each="team, stat : ${teamList}">
-						<input type="checkbox" id="teamlist" name="teamlist" th:value="${team.name}" th:text="${team.name}" th:checked="${team.selected==true}" />
-					</td>
-					<td>
+					<td>絞り込み：
+						<select name="teamlist">
+							<option value=""></option>
+							<option th:each="team:${teamList}" th:value="${team.id}" th:selected="${team.id} " th:inline="text">[[${team.name}]]</option>
+						</select>
 						<input type="button" value="絞り込む" onclick="refine()" />
 					</td>
 				</tr>

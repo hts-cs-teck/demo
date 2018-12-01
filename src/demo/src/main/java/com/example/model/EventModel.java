@@ -24,6 +24,9 @@ public class EventModel {
 	@NotNull(message="メンバを選択してください")
 	private String[] memberlist;
 
+	/** 所属 */
+	private String[] teamlist;
+
 	public String getId() {
 		return id;
 	}
@@ -56,4 +59,11 @@ public class EventModel {
 		this.memberlist = memberlist;
 	}
 
+	public String[] getTeamlist() {
+		return teamlist;
+	}
+
+	public void setTeamlist(String[] teamlist) {
+		this.teamlist = teamlist;
+	}	
 }

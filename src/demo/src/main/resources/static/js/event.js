@@ -82,14 +82,13 @@ function delMember( dataIx ) {
 
 function refine()
 {
-	var teamlist = document.getElementsByName("teamlist");
+//	var teamlist = document.getElementsById("teamlist");
 
 	var teamselect = false;
-	for (i = 0; i < teamlist.length; i++) {
-		if (teamlist[i].checked) {	// チェックボックス
-			teamselect = true;
-			break;
-		}
+	var ret = document.getElementsByName("teamlist")
+	if(team.value != "")
+	{
+		teamselect = true;
 	}
 
 	var nameselect = false;
@@ -101,12 +100,11 @@ function refine()
 
 	if(teamselect || nameselect)
 	{
+
 		var target = document.getElementById('tablebodybase');
 		for( var i = 0; i < target.rows.length; i++ )
 		{
 			var cells = target.rows[ i ].cells;
-
-		    var team = cells[0].innerHTML;
 
 		    var hit = false;
 		    if(teamselect)
@@ -115,7 +113,7 @@ function refine()
 			    {
 			    	if(team == teamlist[j].value)
 			    	{
-			    		if(teamlist[j].checked == false)
+			    		if(teamlist[j].selected == false)
 			    		{
 			    			target.rows[ i ].style.display = "none";
 				    		hit = true;
@@ -169,40 +167,7 @@ function allDisplay()
 
 function preset()
 {
-	var teamlist = document.getElementsByName("teamlistPreset");
-
-	var teamselect = false;
-	for (i = 0; i < teamlist.length; i++) {
-		if (teamlist[i].checked) {	// チェックボックス
-			teamselect = true;
-			break;
-		}
-	}
-
-	if(teamselect)
-	{
-		var target = document.getElementById('tablebodybase');
-		for( var i = 0; i < target.rows.length; i++ )
-		{
-			var cells = target.rows[ i ].cells;
-
-		    var team = cells[0].innerHTML;
-
-		    var hit = false;
-		    for (j = 0; j < teamlist.length; j++)
-		    {
-		    	if(team == teamlist[j].value)
-		    	{
-		    		if(teamlist[j].checked == true)
-		    		{
-		    			addMember( i );
-			    		hit = true;
-		    		}
-		    		break;
-		    	}
-		    }
-		}
-	}
+	document.getElementById("teamList").selectedIndex = 0;
 }
 
 
