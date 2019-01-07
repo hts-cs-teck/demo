@@ -34,6 +34,12 @@
     <input type="hidden" name="eventid" th:value="${eventDetailModel.eventid}" />
     <input type="hidden" name="memberid" th:value="${sessionModel.id}" />
   </form>
+
+   <form method="post" action="/csvOutput" th:object="${csvText}">
+       <p><input type="submit" value="CSV出力"/></p>
+    <input type="hidden" name="csvText" th:value="${csvText}" />
+  </form>
+
   <form method="post" action="/eventList">
     <p><input type="submit" value="戻る"/></p>
   </form>
