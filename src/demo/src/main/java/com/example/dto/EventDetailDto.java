@@ -11,7 +11,8 @@ public class EventDetailDto implements Serializable {
 	private List<String> attendanceList;
 	/** コメント */
 	private String comment;
-
+	/** 致知出欠 */
+	private String bookAttendance;
 
 	public String getName() {
 		return name;
@@ -30,6 +31,12 @@ public class EventDetailDto implements Serializable {
 	}
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+	public String getBookAttendance() {
+		return bookAttendance;
+	}
+	public void setBookAttendance(String bookAttendance) {
+		this.bookAttendance = bookAttendance;
 	}
 
 

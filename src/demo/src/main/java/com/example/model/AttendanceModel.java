@@ -16,11 +16,18 @@ public class AttendanceModel {
 	private Map<Long, String> attendances = new HashMap<Long, String>();
 	/** コメント */
 	private String comment;
+	/** 致知出欠 */
+	private String bookAttendance;
 
 	// ラジオボタンのリスト
 	private Map<String, String> selectAttendance = new HashMap<String, String>() {{
 		put("○", "出席");
 		put("×", "欠席");
+	}};
+	// ラジオボタンのリスト
+	private Map<String, String> selectBookAttendance = new HashMap<String, String>() {{
+		put("○", "提出");
+		put("×", "未提出");
 	}};
 
 	public Long getEventid() {
@@ -52,6 +59,18 @@ public class AttendanceModel {
 	}
 	public void setSelectAttendance(Map<String, String> selectAttendance) {
 		this.selectAttendance = selectAttendance;
+	}
+	public String getBookAttendance() {
+		return bookAttendance;
+	}
+	public void setBookAttendance(String bookAttendance) {
+		this.bookAttendance = bookAttendance;
+	}
+	public Map<String, String> getSelectBookAttendance() {
+		return selectBookAttendance;
+	}
+	public void setSelectBookAttendance(Map<String, String> selectBookAttendance) {
+		this.selectBookAttendance = selectBookAttendance;
 	}
 
 }

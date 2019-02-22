@@ -4,7 +4,7 @@ CREATE TABLE member(id int not null primary key,employeeid int not null ,passwd 
 CREATE TABLE event(id int not null primary key, name varchar(40));
 CREATE TABLE eventDate(id int not null primary key, eventID int references event(id) not null, startdate date not null, enddate date not null, unique(id, startdate, enddate));
 CREATE TABLE eventAttendance(memberID int references member(id) not null, eventDateID int references eventDate(id) not null, attendance varchar(10), primary key(memberID, eventDateID));
-CREATE TABLE eventComment(memberID int references member(id) not null, eventID int references event(id) not null, comment varchar(40), primary key(memberID, eventID));
+CREATE TABLE eventComment(memberID int references member(id) not null, eventID int references event(id) not null, comment varchar(40), bookattendance varchar(10), primary key(memberID, eventID));
 
 ■レコード追加
 INSERT INTO team(id, parentID, name) VALUES(1, NULL, 'カスタマビジネス事業部');
