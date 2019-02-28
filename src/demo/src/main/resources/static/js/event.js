@@ -82,16 +82,14 @@ function delMember( dataIx ) {
 
 function refine()
 {
-	var teamlist = document.getElementsByName("teamlist");
 
 	var teamselect = false;
-	for (i = 0; i < teamlist.length; i++) {
-		if (teamlist[i].checked) {	// チェックボックス
-			teamselect = true;
-			break;
-		}
+	var ret = document.getElementById("teamlist");
+	if(ret.value != "")
+	{
+		teamselect = true;
 	}
-
+	
 	var nameselect = false;
 	var re = document.getElementsByName("search")[0];
 	if(re.value != "")
@@ -111,18 +109,12 @@ function refine()
 		    var hit = false;
 		    if(teamselect)
 		    {
-			    for (j = 0; j < teamlist.length; j++)
-			    {
-			    	if(team == teamlist[j].value)
-			    	{
-			    		if(teamlist[j].checked == false)
-			    		{
-			    			target.rows[ i ].style.display = "none";
-				    		hit = true;
-			    		}
-			    		break;
-			    	}
-			    }
+		    	if(team == ret.value){
+			    	target.rows[ i ].style.display = "";
+			    }else{
+			    	target.rows[ i ].style.display = "none";
+			    	hit = true;
+				}
 		    }
 		    if(hit)
 		    {
@@ -169,14 +161,12 @@ function allDisplay()
 
 function preset()
 {
-	var teamlist = document.getElementsByName("teamlistPreset");
+	var ret = document.getElementById("teamlistPreset");
 
 	var teamselect = false;
-	for (i = 0; i < teamlist.length; i++) {
-		if (teamlist[i].checked) {	// チェックボックス
-			teamselect = true;
-			break;
-		}
+	if(teamlist.value != "")
+	{
+		teamselect = true;
 	}
 
 	if(teamselect)
@@ -193,7 +183,7 @@ function preset()
 		    {
 		    	if(team == teamlist[j].value)
 		    	{
-		    		if(teamlist[j].checked == true)
+		    		if(teamlist[j].selected == false)
 		    		{
 		    			addMember( i );
 			    		hit = true;
