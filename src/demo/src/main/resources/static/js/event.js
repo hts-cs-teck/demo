@@ -89,7 +89,7 @@ function refine()
 	{
 		teamselect = true;
 	}
-	
+
 	var nameselect = false;
 	var re = document.getElementsByName("search")[0];
 	if(re.value != "")
@@ -164,7 +164,7 @@ function preset()
 	var ret = document.getElementById("teamlistPreset");
 
 	var teamselect = false;
-	if(teamlist.value != "")
+	if(ret.value != "")
 	{
 		teamselect = true;
 	}
@@ -178,18 +178,8 @@ function preset()
 
 		    var team = cells[0].innerHTML;
 
-		    var hit = false;
-		    for (j = 0; j < teamlist.length; j++)
-		    {
-		    	if(team == teamlist[j].value)
-		    	{
-		    		if(teamlist[j].selected == false)
-		    		{
-		    			addMember( i );
-			    		hit = true;
-		    		}
-		    		break;
-		    	}
+		    if (team == ret.value) {
+		    	addMember( i );
 		    }
 		}
 	}
