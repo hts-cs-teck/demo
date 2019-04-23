@@ -2,7 +2,7 @@
 CREATE TABLE team(id int not null primary key, parentID int references team(id), name varchar(40));
 CREATE TABLE member(id int not null primary key,employeeid int not null ,passwd varchar(40) , teamID int references team(id), name varchar(40));
 CREATE TABLE event(id int not null primary key, name varchar(40));
-CREATE TABLE eventDate(id int not null primary key, eventID int references event(id) not null, startdate date not null, enddate date not null, unique(id, startdate, enddate));
+CREATE TABLE eventDate(id int not null primary key, eventID int references event(id) not null, startdate timestamp not null, enddate timestamp not null, unique(id, startdate, enddate));
 CREATE TABLE eventAttendance(memberID int references member(id) not null, eventDateID int references eventDate(id) not null, attendance varchar(10), primary key(memberID, eventDateID));
 CREATE TABLE eventComment(memberID int references member(id) not null, eventID int references event(id) not null, comment varchar(40), bookattendance varchar(10), primary key(memberID, eventID));
 
